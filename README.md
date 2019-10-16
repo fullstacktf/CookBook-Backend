@@ -4,7 +4,7 @@
 
 ## Miembros del Equipo
 
-- @Carlos A.(https://github.com/bolften)
+- [@Carlos A.](https://github.com/bolften)
 - https://github.com/frannav
 - https://github.com/AlexaGSC
 
