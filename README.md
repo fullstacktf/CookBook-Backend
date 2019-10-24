@@ -10,7 +10,9 @@ Aplicación intuitiva y de fácil utilización para todo tipo de usuarios, tanto
 - [@Fran N.](https://github.com/frannav)
 - [@Alexa S.](https://github.com/AlexaGSC)
 
-## Características del Backend.
+## Características del Backend en la base de datos.
 
 - Almacenamiento de los datos de los usuarios.
+- ALmacenamiento de los ingredientes.
+- Recetas.
 
