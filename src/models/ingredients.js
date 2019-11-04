@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const IngredientsSchema = new Schema({
-    name: String
+    name: { type: String, required: true, unique: true },
 }, {
-    collation: 'IngredientsData'
+    collation: 'Ingredients'
 });
 
 module.exports = mongoose.model('Ingredient', IngredientsSchema);

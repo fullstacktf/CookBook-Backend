@@ -10,7 +10,7 @@ const UserSchema = new Schema({
         preferent: Array,
         ignore: Array
     },
-    followers: Array,
+    follows: Array,
     ownRecipes: Array,
     otherRecipes: Array,
     rol: String
