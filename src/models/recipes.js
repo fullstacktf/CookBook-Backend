@@ -10,6 +10,7 @@ const RecipeSchema = new Schema({
         quantity: String
     }],
     likes: Number,
+    comments: Array,
     tags: Array
 }, {
     collation: 'RecipesData'
