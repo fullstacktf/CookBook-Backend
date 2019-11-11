@@ -11,6 +11,7 @@ const RecipeSchema = new Schema({
     }],
     likes: Number,
     comments: Array,
+    date: Date,
     tags: Array
 }, {
     collation: 'RecipesData'

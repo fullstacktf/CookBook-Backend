@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const CommentsSchema = new Schema({
     commentOwner: String,
     content: String,
-    likes: Number
+    likes: Number,
+    date: Date
 }, {
     collation: 'Comments'
 });
