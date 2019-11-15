@@ -3,10 +3,10 @@ const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
-    userName: { type: String, required: true, unique: true },
-    email: { type: String, unique: true, lowercase: true },
-    password: { type: String, select: false },
-    IngredientsPreferences: {
+    userName: String,
+    email: String,
+    password: String,
+    ingredientsPreferences: {
         preferent: Array,
         ignore: Array
     },
@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     collection: 'UsersData'
 });
 
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function (next) {
     const user = this;
     if (!user.isModified('password')) return next();
 

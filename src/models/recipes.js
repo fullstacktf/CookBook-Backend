@@ -2,15 +2,20 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const RecipeSchema = new Schema({
-    title: { type: String, required: true },
-    owner: { type: String, required: true },
-    description: { type: String, required: true },
+    title: String,
+    owner: String,
+    description: String,
     ingredients: [{
-        name: { type: String, required: true },
+        name: String,
         quantity: String
     }],
     likes: Number,
-    comments: Array,
+    comments: [{
+        commentOwner: String,
+        content: String,
+        likes: Number,
+        date: Date
+    }],
     date: Date,
     tags: Array
 }, {
