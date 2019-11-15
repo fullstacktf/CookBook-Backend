@@ -14,7 +14,7 @@ const RecipeSchema = new Schema({
     date: Date,
     tags: Array
 }, {
-    collation: 'RecipesData'
+    collection: 'RecipesData'
 });
 
 module.exports = mongoose.model('Recipe', RecipeSchema);

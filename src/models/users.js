@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     otherRecipes: Array,
     rol: String
 }, {
-    collation: 'UsersData'
+    collection: 'UsersData'
 });
 
 UserSchema.pre('save', (next) => {

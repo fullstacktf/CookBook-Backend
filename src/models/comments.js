@@ -7,7 +7,7 @@ const CommentsSchema = new Schema({
     likes: Number,
     date: Date
 }, {
-    collation: 'Comments'
+    collection: 'Comments'
 });
 
 module.exports = mongoose.model('Comment', CommentsSchema);
