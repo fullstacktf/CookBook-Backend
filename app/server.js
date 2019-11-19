@@ -1,23 +1,34 @@
 const express = require('express');
+const config = require('./config/config');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
-const app = express();
+const server = express();
+
+//settings
+
+server.set('port', config.port);
+mongoose.set("useFindAndModify", false);
 
 // Middlewares
 
-/* app.use(express.json());
-app.use('/api/users', userRouter);
-app.use('/api/recipes', recipeRouter); */
+server.use(morgan('dev'));
+server.use(express.urlencoded({ extended: false }));
+server.use(express.json());
+// server.use('/api/users', userRouter);
+// server.use('/api/recipes', recipeRouter); 
 
 //Starting the server
 
 
-app.listen(process.env.PORT || 3000, err => {
-    if(err) {
-        console.log(err);
-    }
-    else {
-        console.log('listening on port 3000');
-    }
-})
+mongoose.connect(config.db, { useNewUrlParser: true })
+    .then(db => {
+        console.log('Connected to MongoDB');
+        server.listen(server.get('port'), (err) => {
+            if (err) console.error(err);
+
+            console.log(`Listen on port: ${server.get('port')}`);
+        });
+    })
+    .catch(err => console.err(`Failed to connect to database: ${err}`));
 
