@@ -15,11 +15,18 @@ mongoose.set("useFindAndModify", false);
 server.use(morgan('dev'));
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
-// server.use('/api/users', userRouter);
+
+
+server.use('/recipes', require('./recipes/routers/recipe.router'));
 // server.use('/api/recipes', recipeRouter); 
+app.use((err, next) => {
+    if (err) {
+        res.status(500).send(err);
+        return;
+    }
+});
 
-//Starting the server
-
+//Starting the server and DB
 
 mongoose.connect(config.db, { useNewUrlParser: true })
     .then(db => {
@@ -31,4 +38,3 @@ mongoose.connect(config.db, { useNewUrlParser: true })
         });
     })
     .catch(err => console.err(`Failed to connect to database: ${err}`));
-
