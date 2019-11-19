@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     res.json(recipes);
 });
 
-// get all recipes
+// get recipes by id
 
 router.get('/:id', async (req, res) => {
     const recipe = await Recipe.findById(req.params.id);
