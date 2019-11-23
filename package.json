@@ -1,24 +1,63 @@
 {
-  "name": "topsecret",
+  "name": "proyectomern",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Back-end and db for chefs4 web application",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app/server.js",
-    "dev": "nodemon app/server.js"
+    "ts": "tsc -p .",
+    "server": "npm app/server.ts",
+    "dev": "nodemon app/server.ts",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
+    "jwt-simple": "^0.5.6",
     "moment": "^2.24.0",
-    "mongoose": "^5.7.11",
-    "morgan": "^1.9.1"
+    "mongoose": "^5.7.7",
+    "morgan": "^1.9.1",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.5.32",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.12.8",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "eslint": "^6.7.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4"
-  }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleDirectories": [
+      "./node_modules",
+      "./src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "mjs"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx|mjs)$": "babel-jest"
+    },
+    "testMatch": [
+      "<rootDir>"
+    ]
+  },
+  "browserslist": [
+    "defaults",
+    "not ie < 11",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ]
 }
