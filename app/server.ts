@@ -1,22 +1,30 @@
-const express = require('express');
-const config = require('./config/config');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+import express, {json, urlencoded} from 'express';
+import config from './config/config';
+import morgan from 'morgan';
+import mongoose, { mongo } from 'mongoose';
+import userRouter from './users/routers/user.router';
 
 const server = express();
 
 //settings
 
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
 server.set('port', config.port);
-mongoose.set("useFindAndModify", false);
 
 // Middlewares
 
 server.use(morgan('dev'));
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
-// server.use('/api/users', userRouter);
-// server.use('/api/recipes', recipeRouter); 
+
+server.use('/users', userRouter);
+server.use((req, res, err, next) => {
+    if(err) {
+        res.status(500).send(err);
+    }
+    next();
+});
 
 //Starting the server
 
@@ -30,5 +38,5 @@ mongoose.connect(config.db, { useNewUrlParser: true })
             console.log(`Listen on port: ${server.get('port')}`);
         });
     })
-    .catch(err => console.err(`Failed to connect to database: ${err}`));
+    .catch(err => console.error(`Failed to connect to database: ${err}`));
 
