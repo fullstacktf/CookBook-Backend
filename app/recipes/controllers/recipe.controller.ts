@@ -1,7 +1,6 @@
 import Recipe from '../models/recipes.model';
 import moment from 'moment';
 
-
 export default class RecipeCRUD {
   static async getAllRecipes() {
     const recipes = await Recipe.find();
