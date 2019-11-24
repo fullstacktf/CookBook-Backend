@@ -40,7 +40,7 @@ router.get('/:id', async (req, res, next) => {
 
 // Add new user
 
-router.post('/', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
     try {
         // Validator body here
         userController.signUp(req.body)
@@ -53,6 +53,18 @@ router.post('/', async (req, res, next) => {
     }
     catch (error) {
         next(`Error saving: ${error}`);
+    }
+});
+
+// Log in user
+
+router.post('/login', async (req, res, next) => {
+    try {
+        const response = userController.logIn(req.body);
+        res.status(200).json(response);
+    }
+    catch (error) {
+        next(`Error login: ${error}`);
     }
 });
 
