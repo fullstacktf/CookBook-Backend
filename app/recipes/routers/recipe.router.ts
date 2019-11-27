@@ -33,24 +33,31 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // add new recipe
-router.post('/', recipeValidator,
-  async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-      }
-      recipeController.newRecipe(req.body)
-        .then(recipe => {
-          res.status(200).json(recipe);
-        })
-        .catch(error => {
-          next(`Error in the database when saving: ${error}`);
-        });
-    } catch (error) {
-      next(`Error to save the recipe in the database: ${error}`);
+router.post('/', [
+  body('title')
+    .exists()
+    .withMessage('title is required')
+    .isString()
+    .isAlphanumeric()
+    .isLength({ min: 3, max: 30 })
+], async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
     }
-  });
+    recipeController.newRecipe(req.body)
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(error => {
+        next(`Error in the database when saving: ${error}`);
+      });
+  } catch (error) {
+    next(`Error to save the recipe in the database: ${error}`);
+  }
+});
 
 // router.post('/', async (req, res, next) => {
 //   try {
