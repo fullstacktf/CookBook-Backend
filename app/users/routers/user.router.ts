@@ -1,7 +1,7 @@
 import userController from '../controllers/user.controller';
 import { Router } from 'express';
 const router: Router = Router();
-import bcrypt from 'bcryptjs';
+
 
 // Get all users
 

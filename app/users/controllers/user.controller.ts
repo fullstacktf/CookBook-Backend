@@ -1,5 +1,5 @@
 import User from '../models/users.model';
-import { compareSync } from 'bcryptjs';
+
 
 
 export default class UserCRUD {

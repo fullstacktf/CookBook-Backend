@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Hash } from 'crypto';
 const { Schema } = mongoose;
-const bcrypt = require('bcryptjs');
+//const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
     userName: String,
@@ -20,9 +20,6 @@ const UserSchema = new Schema({
 });
 
 
-UserSchema.pre('save', function(next) => {
-    
-})
 
 
 // UserSchema.methods.encryptPassword = async (password) => {
