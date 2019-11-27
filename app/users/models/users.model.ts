@@ -19,15 +19,24 @@ const UserSchema = new Schema({
     collection: 'UsersData'
 });
 
-UserSchema.methods.encryptPassword = async (password) => {
-    const salt = await bcrypt.genSalt(10);
-    const hash = bcrypt.hash(password, salt);
-    return hash;
-};
 
-UserSchema.methods.matchPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-};
+UserSchema.pre('save', function(next) => {
+    
+})
+
+
+// UserSchema.methods.encryptPassword = async (password) => {
+//     const salt = await bcrypt.genSalt(10);
+//     const hash = bcrypt.hash(password, salt);
+//     return hash;
+// };
+
+// UserSchema.methods.matchPassword = async function (password) {
+//     return await bcrypt.compare(password, this.password);
+// };
+
+
+
 
 // UserSchema.pre('save', function (next) {
 //     const user = this;
