@@ -8,8 +8,6 @@ const server = express();
 
 // settings
 
-// Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
-// by default, you need to set it to false.
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
 server.set('port', config.port);
@@ -21,9 +19,10 @@ server.use(urlencoded({ extended: false }));
 server.use(json());
 
 server.use('/recipes', recipeRouter);
-server.use((req, res, err, next) => {
+
+server.use((err, req, res, next) => {
   if (err) {
-    res.status(500).send(err);
+    res.status(500).json(err);
   }
   next();
 });
@@ -31,7 +30,7 @@ server.use((req, res, err, next) => {
 // Starting the server and DB
 
 mongoose.connect(config.db, { useNewUrlParser: true })
-  .then(db => {
+  .then(() => {
     console.log('Connected to MongoDB');
     server.listen(server.get('port'), (err) => {
       if (err) console.error(err);

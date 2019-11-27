@@ -1,7 +1,17 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import { Document, Schema, Model, model } from 'mongoose';
 
-const RecipeSchema = new Schema({
+export interface RecipeModel extends Document {
+  title: string;
+  owner: string;
+  description: string;
+  ingredients: Array<object>;
+  likes: number;
+  comments: Array<object>;
+  date: Date;
+  tags: Array<string>;
+}
+
+const RecipeSchema: Schema = new Schema({
   title: String,
   owner: String,
   description: String,
@@ -18,8 +28,6 @@ const RecipeSchema = new Schema({
   }],
   date: Date,
   tags: Array
-}, {
-  collection: 'RecipesData'
 });
 
-export default mongoose.model('Recipe', RecipeSchema);
+export const Recipe: Model<RecipeModel> = model<RecipeModel>('Recipe', RecipeSchema);
