@@ -1,20 +1,19 @@
-import User from '../models/users.model';
-
+import { User, IntUserModel } from '../models/users.model';
 
 
 export default class UserCRUD {
 
-    static async getAllUsers() {
+    static async getAllUsers(): Promise<IntUserModel[]> {
         const users = await User.find();
         return users;
     }
 
-    static async getUser(id) {
+    static async getUser(id: string): Promise<IntUserModel> {
         const user = await User.findById(id);
         return user;
     }
     
-    static async signUp(body) {
+    static async signUp(body): Promise<IntUserModel> {
         const { userName, email, password } = body;
         const newUser = new User({
             userName,
@@ -27,7 +26,7 @@ export default class UserCRUD {
         return newUser;     
     }     
 
-    static async logIn(body) {
+    static async logIn(body): Promise<Boolean> {
         const existEmail = await User.findById(body.email);
         const userToLogIn = await User.findById(body.email);
         const userPasswordToLogin = await User.findById(body.password);
@@ -39,12 +38,12 @@ export default class UserCRUD {
         }
     }
 
-    static async updateUser(id, body) {
+    static async updateUser(id, body): Promise<IntUserModel> {
         const userUpdated = await User.findOneAndUpdate(id, body);
         return userUpdated;
     }
 
-    static async deleteUser(id, body) {
+    static async deleteUser(id: string, body): Promise<IntUserModel> {
         const userDeleted = await User.findByIdAndDelete(id);
         return userDeleted;
     }

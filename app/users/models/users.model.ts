@@ -1,12 +1,23 @@
-import mongoose from 'mongoose';
-import { Hash } from 'crypto';
-const { Schema } = mongoose;
+import { Document, Schema, Model, model } from 'mongoose';
+//import { Hash } from 'crypto';
+//const { Schema } = mongoose;
 //const bcrypt = require('bcryptjs');
 
-const UserSchema = new Schema({
-    userName: String,
-    email: String,
-    password: String,
+export interface IntUserModel extends Document {
+    userName: string;
+    email: string;
+    password: string;
+    ingredientsPreferences: Array<string>;
+    follows: Array<string>;
+    ownRecipes: Array<string>;
+    otherRecipes: Array<string>;
+    rol: string
+}
+
+const UserSchema: Schema = new Schema({
+    userName: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
     ingredientsPreferences: {
         preferent: Array,
         ignore: Array
@@ -51,4 +62,4 @@ const UserSchema = new Schema({
 //     });
 // });
 
-export default mongoose.model('User', UserSchema);
+export const User: Model<IntUserModel> = model<IntUserModel>('users', UserSchema);
