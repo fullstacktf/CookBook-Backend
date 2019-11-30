@@ -1,42 +1,74 @@
-import { Recipe, RecipeModel } from '../models/recipes.model';
-import moment from 'moment';
+import validateDeliverRecipe from '../helpers/recipe.helper';
+import recipeService from '../services/Recipe.service';
+import { check, validationResult, body } from 'express-validator';
+import { RecipeModel } from '../models/recipes.model';
 
-export default class RecipeCRUD {
-
-  static async getAllRecipes(): Promise<RecipeModel[]> {
-    const recipes = await Recipe.find();
-    return recipes;
-  }
-
-  static async getRecipe(id): Promise<RecipeModel> {
-    const recipe = await Recipe.findById(id);
-    return recipe;
-  }
-
-  static async newRecipe(body): Promise<RecipeModel> {
-    const { title, owner, description, ingredients, tags } = body;
-    const newRecipe = new Recipe({
-      title,
-      owner,
-      description,
-      ingredients,
-      likes: 0,
-      comments: [],
-      date: Date(),
-      tags
+export const getRecipes = async (req, res, next) => {
+  recipeService.getRecipes()
+    .then(recipes => {
+      if (validateDeliverRecipe(recipes))
+        return res.status(200).json(recipes);
+      next('The database is empty.');
+    })
+    .catch(error => {
+      next(`Error in the database when looking for recipes: ${error}`);
     });
-    await newRecipe.save();
-    return newRecipe;
-  }
+};
 
-  static async updateRecipe(id, body): Promise<RecipeModel> {
-    console.log(typeof id);
-    const recipeUpdated = await Recipe.findOneAndUpdate(id, body);
-    return recipeUpdated;
-  }
+export const getRecipe = async (req, res, next) => {
+  recipeService.getRecipe(req.params.id)
+    .then(recipe => {
+      if (validateDeliverRecipe(recipe))
+        return res.status(200).json(recipe);
+      next('Error to get the recipe or the recipe does not exist.');
+    })
+    .catch(error => {
+      next(`Error in the database when looking for the recipe: ${error}`);
+    });
+};
 
-  static async deleteRecipe(id): Promise<RecipeModel> {
-    const recipeDeleted = await Recipe.findByIdAndDelete(id);
-    return recipeDeleted;
+export const newRecipe = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    recipeService.newRecipe(req.body)
+      .then(recipe => {
+        res.status(200).json(recipe);
+      })
+      .catch(error => {
+        next(`Error in the database when saving: ${error}`);
+      });
+  } catch (error) {
+    next(`Error to save the recipe in the database: ${error}`);
   }
-}
+};
+
+export const updateRecipe = async (req, res, next) => {
+  try {
+    recipeService.updateRecipe(req.params.id, req.body)
+      .then(recipeUpdated => {
+        res.status(200).json(recipeUpdated);
+      })
+      .catch(error => {
+        next(`Error in the database when updating: ${error}`);
+      });
+  } catch (error) {
+    next(`Error to update the recipe: ${error}`);
+  }
+};
+
+export const deleteRecipe = async (req, res, next) => {
+  try {
+    recipeService.deleteRecipe(req.params.id)
+      .then(recipeDeleted => {
+        res.status(200).json(recipeDeleted);
+      })
+      .catch(error => {
+        next(`Error in the database when deleting: ${error}`);
+      });
+  } catch (error) {
+    next(`Error to delete the recipe: ${error}`);
+  }
+};

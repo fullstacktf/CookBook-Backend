@@ -3,6 +3,7 @@ import config from './config/config';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import recipeRouter from './recipes/routers/recipe.router';
+import { resolve } from 'dns';
 
 const server = express();
 
