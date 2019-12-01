@@ -1,7 +1,5 @@
 import validateDeliverRecipe from '../helpers/recipe.helper';
 import recipeService from '../services/Recipe.service';
-import { check, validationResult, body } from 'express-validator';
-import { RecipeModel } from '../models/recipes.model';
 
 export const getRecipes = async (req, res, next) => {
   recipeService.getRecipes()
@@ -29,10 +27,6 @@ export const getRecipe = async (req, res, next) => {
 
 export const newRecipe = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
     recipeService.newRecipe(req.body)
       .then(recipe => {
         res.status(200).json(recipe);

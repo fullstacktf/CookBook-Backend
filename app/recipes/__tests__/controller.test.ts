@@ -1,14 +1,15 @@
-import * as controller from '../controllers/recipe.controller';
+import validateDeliverRecipe from '../helpers/recipe.helper';;
 
-function next(): void {
-  return null;
-}
 
-const res = { 'a': 'a' };
-
-describe('recipe.controller', () => {
-  test('Should return error if recipe does not exist in database', () => {
-    const recipe = undefined;
-    expect(controller.getRecipes(recipe, res, next)).toBe('Error to get the recipe or the recipe does not exist.');
+describe('recipe.helper', () => {
+  describe('validateDeliverRecipe', () => {
+    test('should return false if the recipe is an array empty', () => {
+      const recipe = [];
+      expect(validateDeliverRecipe(recipe)).toBe(false);
+    });
+    test('should return false if the recipe is an object empty', () => {
+      const recipe = {};
+      expect(validateDeliverRecipe(recipe)).toBe(false);
+    });
   });
 });

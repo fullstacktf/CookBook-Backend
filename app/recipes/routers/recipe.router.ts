@@ -1,5 +1,6 @@
 import * as recipeController from '../controllers/recipe.controller';
-import recipeValidator from '../helpers/recipe.validator';
+import validator, { recipeValidationRules } from '../helpers/recipe.validator';
+//import validateDeliverRecipe from '../helpers/recipe.helper';
 import { Router } from 'express';
 
 const router: Router = Router();
@@ -11,7 +12,7 @@ router.get('/', recipeController.getRecipes);
 router.get('/:id', recipeController.getRecipe);
 
 // add new recipe
-router.post('/', recipeValidator, recipeController.newRecipe);
+router.post('/', recipeValidationRules(), validator, recipeController.newRecipe);
 
 // // update a new recipe
 router.put('/:id', recipeController.updateRecipe);
