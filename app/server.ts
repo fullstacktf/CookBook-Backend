@@ -1,9 +1,9 @@
-import express, { json, urlencoded } from 'express';
+import express, { json, urlencoded, Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import config from './config/config';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import recipeRouter from './recipes/routers/recipe.router';
-import { resolve } from 'dns';
+
 
 const server = express();
 
@@ -21,7 +21,7 @@ server.use(json());
 
 server.use('/recipes', recipeRouter);
 
-server.use((err, req, res, next) => {
+server.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
   if (err) {
     res.status(500).json(err);
   }

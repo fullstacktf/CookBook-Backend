@@ -1,6 +1,7 @@
-import { body, validationResult } from 'express-validator';
+import { body, validationResult, ValidationChain } from 'express-validator';
+import { Request, Response, NextFunction } from 'express';
 
-export const recipeValidationRules = () => {
+export const recipeValidationRules = (): ValidationChain[] => {
   return [
     body('title')
       .exists()
@@ -42,7 +43,7 @@ export const recipeValidationRules = () => {
   ];
 };
 
-const validator = (req, res, next) => {
+const validator = (req: Request, res: Response, next: NextFunction): Response | void => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();
@@ -51,9 +52,7 @@ const validator = (req, res, next) => {
   const extractedErrors = [];
   errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
 
-  return res.status(422).json({
-    errors: extractedErrors,
-  });
+  return res.status(422).json({ errors: extractedErrors });
 };
 
 export default validator;

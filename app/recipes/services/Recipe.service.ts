@@ -1,19 +1,18 @@
 import { Recipe, RecipeModel } from '../models/recipes.model';
-// import moment from 'moment';
 
 export default class RecipeCRUD {
 
   static async getRecipes(): Promise<RecipeModel[]> {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find().limit(10);
     return recipes;
   }
 
-  static async getRecipe(id): Promise<RecipeModel> {
+  static async getRecipe(id: string): Promise<RecipeModel> {
     const recipe = await Recipe.findById(id);
     return recipe;
   }
 
-  static async newRecipe(body): Promise<RecipeModel> {
+  static async newRecipe(body: RecipeModel): Promise<RecipeModel> {
     const { title, owner, description, ingredients, tags } = body;
     const newRecipe = new Recipe({
       title,
@@ -29,13 +28,13 @@ export default class RecipeCRUD {
     return newRecipe;
   }
 
-  static async updateRecipe(id, body): Promise<RecipeModel> {
+  static async updateRecipe(id: string, body: RecipeModel): Promise<RecipeModel> {
     console.log(typeof id);
     const recipeUpdated = await Recipe.findOneAndUpdate(id, body);
     return recipeUpdated;
   }
 
-  static async deleteRecipe(id): Promise<RecipeModel> {
+  static async deleteRecipe(id: string): Promise<RecipeModel> {
     const recipeDeleted = await Recipe.findByIdAndDelete(id);
     return recipeDeleted;
   }

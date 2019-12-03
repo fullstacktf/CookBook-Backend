@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import validateDeliverRecipe from '../helpers/recipe.helper';
 import recipeService from '../services/Recipe.service';
+import { Request, Response, NextFunction } from 'express';
 
-export const getRecipes = async (req, res, next) => {
+export const getRecipes = async (req: Request, res: Response, next: NextFunction) => {
   recipeService.getRecipes()
     .then(recipes => {
       if (validateDeliverRecipe(recipes))
@@ -13,7 +15,7 @@ export const getRecipes = async (req, res, next) => {
     });
 };
 
-export const getRecipe = async (req, res, next) => {
+export const getRecipe = async (req: Request, res: Response, next: NextFunction) => {
   recipeService.getRecipe(req.params.id)
     .then(recipe => {
       if (validateDeliverRecipe(recipe))
@@ -25,44 +27,32 @@ export const getRecipe = async (req, res, next) => {
     });
 };
 
-export const newRecipe = async (req, res, next) => {
-  try {
-    recipeService.newRecipe(req.body)
-      .then(recipe => {
-        res.status(200).json(recipe);
-      })
-      .catch(error => {
-        next(`Error in the database when saving: ${error}`);
-      });
-  } catch (error) {
-    next(`Error to save the recipe in the database: ${error}`);
-  }
+export const newRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.newRecipe(req.body)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(error => {
+      next(`Error to save the recipe in the database: ${error}`);
+    });
 };
 
-export const updateRecipe = async (req, res, next) => {
-  try {
-    recipeService.updateRecipe(req.params.id, req.body)
-      .then(recipeUpdated => {
-        res.status(200).json(recipeUpdated);
-      })
-      .catch(error => {
-        next(`Error in the database when updating: ${error}`);
-      });
-  } catch (error) {
-    next(`Error to update the recipe: ${error}`);
-  }
+export const updateRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.updateRecipe(req.params.id, req.body)
+    .then(recipeUpdated => {
+      res.status(200).json(recipeUpdated);
+    })
+    .catch(error => {
+      next(`Error in the database when updating: ${error}`);
+    });
 };
 
-export const deleteRecipe = async (req, res, next) => {
-  try {
-    recipeService.deleteRecipe(req.params.id)
-      .then(recipeDeleted => {
-        res.status(200).json(recipeDeleted);
-      })
-      .catch(error => {
-        next(`Error in the database when deleting: ${error}`);
-      });
-  } catch (error) {
-    next(`Error to delete the recipe: ${error}`);
-  }
+export const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.deleteRecipe(req.params.id)
+    .then(recipeDeleted => {
+      res.status(200).json(recipeDeleted);
+    })
+    .catch(error => {
+      next(`Error to delete the recipe: ${error}`);
+    });
 };
