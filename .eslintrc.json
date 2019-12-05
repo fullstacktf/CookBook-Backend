@@ -1,18 +1,18 @@
 {
     "rules": {
-        "indent": [
+        "@typescript-eslint/indent": [
             "error",
             2
         ],
-        "quotes": [
+        "@typescript-eslint/quotes": [
             "error",
             "single"
         ],
-        "semi": [
+        "@typescript-eslint/semi": [
             "error",
             "always"
         ],
-        "no-empty-function": "error",
+        "@typescript-eslint/no-empty-function": "error",
         "init-declarations": [
             "error",
             "always"
@@ -26,6 +26,7 @@
         "browser": true,
         "jest": true
     },
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module",
@@ -34,11 +35,13 @@
         }
     },
     "extends": [
-        "eslint:recommended",
-        "standard"
+        "plugin:@typescript-eslint/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
-    }
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ]
 }
