@@ -12,7 +12,7 @@ export const auth = (req, res, next): NextFunction => {
       req.user = sub;
       next();
     })
-    .catch(error => {
-      next(`Error, Invalid token: ${error}`);
+    .catch(() => {
+      next('Error, Invalid token');
     });
 };
