@@ -9,7 +9,7 @@ export default class UserCRUD {
   }
 
   static async getUser(id: string): Promise<UserModel> {
-    const user = await User.findById(id);
+    const user = await User.findOne(id);
     return user;
   }
 

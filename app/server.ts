@@ -5,10 +5,11 @@ import mongoose from 'mongoose';
 import userRouter from './users/routers/user.router';
 import { signIn, signUp } from './users/controllers/user.controller';
 import { auth } from './users/middleware/auth.middleware';
+// import validator from './users/helpers/user.validator';
 
 const server = express();
 
-//settings
+// settings
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
@@ -20,8 +21,8 @@ server.use(morgan('dev'));
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 
-server.use('/signup', signUp);
-server.use('/signin', signIn);
+server.use('/signup', /*validator,*/ signUp);
+server.use('/signin', /*validator,*/ signIn);
 
 server.use(auth);
 server.use('/users', userRouter);
@@ -33,7 +34,7 @@ server.use((err, req, res, next) => {
   next();
 });
 
-//Starting the server
+// Starting the server and DB
 
 mongoose.connect(config.db, { useNewUrlParser: true })
   .then(() => {

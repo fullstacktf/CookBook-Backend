@@ -1,6 +1,6 @@
 import * as userController from '../controllers/user.controller';
 import { Router } from 'express';
-import * as validator from '../helpers/user.helper';
+// import validator from '../helpers/user.validator';
 
 const router: Router = Router();
 
@@ -10,11 +10,11 @@ router.get('/', userController.getUsers);
 // Get ONE user by id
 router.get('/:id', userController.getUser);
 
-// Add new user
-router.post('/signup', userController.signUp);
+// // Add new user
+// router.post('/signup', validator, userController.signUp);
 
-// Sign in user
-router.post('/signin', userController.signIn);
+// // Sign in user
+// router.post('/signin', validator, userController.signIn);
 
 // Update new user
 router.put('/:id', userController.updateUser);
