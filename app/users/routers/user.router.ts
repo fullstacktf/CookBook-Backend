@@ -1,81 +1,24 @@
-import userController from '../controllers/user.controller';
+import * as userController from '../controllers/user.controller';
 import { Router } from 'express';
 
 const router: Router = Router();
 
-// Get all users
-
-router.get('/', (req, res, next) => {
-  userController.getAllUsers()
-    .then(user => {
-      res.status(200).json(user);
-    })
-    .catch(() => {
-      next('Error in the db looking for users');
-    });
-
-});
+// Get users
+router.get('/', userController.getUsers);
 
 // Get ONE user by id
-
-router.get('/:id', async (req, res, next) => {
-  userController.getUser(req.params.id)
-    .then(user => {
-      res.status(200).json(user);
-    })
-    .catch(() => {
-      next('Error looking the user');
-    });
-
-});
+router.get('/:id', userController.getUser);
 
 // Add new user
+router.post('/signup', userController.signUp);
 
-router.post('/signup', async (req, res, next) => {
-  userController.signUp(req.body)
-    .then(token => {
-      res.status(200).json(token);
-    })
-    .catch(() => {
-      next('Error sign up');
-    });
-});
+// Sign in user
+router.post('/signin', userController.signIn);
 
-// Log in user
-
-router.post('/signin', async (req, res, next) => {
-  userController.signIn(req.body)
-    .then(token => {
-      res.status(200).json(token);
-    })
-    .catch(() => {
-      next('Error sign in');
-    });
-});
-
-// Update new recipe
-
-router.put('/:id', async (req, res, next) => {
-  userController.updateUser(req.params.id, req.body)
-    .then(userDeleted => {
-      res.status(200).json(userDeleted);
-    })
-    .catch(() => {
-      next('Error in db trying to delete user');
-    });
-});
+// Update new user
+router.put('/:id', userController.updateUser);
 
 // Delete user
-
-router.delete('/:id', async (req, res, next) => {
-  userController.deleteUser(req.params.id)
-    .then(userDeleted => {
-      res.status(200).json(userDeleted);
-    })
-    .catch(() => {
-      next('Error in DB deleting user');
-    });
-});
-
+router.delete('/:id', userController.deleteUser);
 
 export = router;

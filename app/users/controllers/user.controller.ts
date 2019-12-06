@@ -1,60 +1,63 @@
-import { User, UserModel } from '../models/users.model';
-import { createToken } from '../services/jwt.services';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import userServices from '../services/user.services';
+import { Request, Response, NextFunction } from 'express';
 
-export default class UserCRUD {
-
-  static async getAllUsers(): Promise<UserModel[]> {
-    const users = await User.find().limit(10);
-    return users;
-  }
-
-  static async getUser(id: string): Promise<UserModel> {
-    const user = await User.findById(id);
-    return user;
-  }
-
-  static async signUp(body: UserModel): Promise<string> {
-    const { userName, email, password } = body;
-
-    const newUser: UserModel = new User({
-      userName,
-      email,
-      password,
-      ingredientsPreferences: {
-        preferent: [],
-        ignore: []
-      },
-      follows: [],
-      ownRecipes: [],
-      otherRecipes: [],
-      rol: 'user'
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.getUsers()
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      next('Error in the db looking for users');
     });
-    newUser.avatar = newUser.gravatar();
-    await newUser.save(err => { if (err) throw err; });
+};
 
-    return createToken(newUser);
-  }
-
-  static async signIn(body: UserModel): Promise<string> {
-    const { userName, password } = body;
-    const user = await User.findOne({ userName });
-    if (user === null) throw Error;
-    user.comparePasswords(password, (error, isMatch) => {
-      if (error) throw error;
-      if (!isMatch) throw error;
-      console.log('controller');
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.getUser(req.params.id)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      next('Error looking the user');
     });
-    const token = createToken(user);
-    return token;
-  }
+};
 
-  static async updateUser(id: string, body: string): Promise<UserModel> {
-    const userUpdated = await User.findOneAndUpdate(id, body);
-    return userUpdated;
-  }
+export const signUp = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.signUp(req.body)
+    .then(token => {
+      res.status(200).json(token);
+    })
+    .catch(() => {
+      next('Error sign up');
+    });
+};
 
-  static async deleteUser(id: string): Promise<UserModel> {
-    const userDeleted = await User.findByIdAndDelete(id);
-    return userDeleted;
-  }
-}
+export const signIn = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.signIn(req.body)
+    .then(token => {
+      res.status(200).json(token);
+    })
+    .catch(() => {
+      next('Error sign in');
+    });
+};
+
+export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.updateUser(req.params.id, req.body)
+    .then(userDeleted => {
+      res.status(200).json(userDeleted);
+    })
+    .catch(() => {
+      next('Error in db trying to delete user');
+    });
+};
+
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.deleteUser(req.params.id)
+    .then(userDeleted => {
+      res.status(200).json(userDeleted);
+    })
+    .catch(() => {
+      next('Error in DB deleting user');
+    });
+};

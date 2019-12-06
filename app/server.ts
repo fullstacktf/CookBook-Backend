@@ -34,7 +34,6 @@ server.use((err, req, res, next) => {
 
 //Starting the server
 
-
 mongoose.connect(config.db, { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to MongoDB');
