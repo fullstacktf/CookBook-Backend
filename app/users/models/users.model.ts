@@ -3,7 +3,8 @@ import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 
 export interface UserModel extends Document {
-  comparePassword(password: string, callback);
+  comparePasswords(password: string, callback): void;
+  gravatar(): string;
   userName: string;
   avatar: string;
   email: string;
@@ -48,19 +49,21 @@ UserSchema.pre<UserModel>('save', function (next) {
   });
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword, callback): void {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    if (err)
+UserSchema.methods.comparePasswords = function (candidatePassword: string, callback): void {
+  console.log('model');
+  bcrypt.compare(candidatePassword, this.password, function (err: Error, isMatch: boolean) {
+    if (err) {
       return callback(err);
+    }
     callback(null, isMatch);
   });
 };
 
-// UserSchema.methods.gravatar = function (): unknown {
-//   if (!this.userName) return 'https://gravatar.com/avatar/?s=200&d=retro';
+UserSchema.methods.gravatar = function (): string {
+  if (!this.userName) return 'https://gravatar.com/avatar/?s=200&d=retro';
 
-//   const md5 = crypto.createHash('md5').update(this.userName).digest('hex');
-//   return `https://gravatar.com/avatar/${md5}?s=200&d=retro`;
-// };
+  const md5 = crypto.createHash('md5').update(this.userName).digest('hex');
+  return `https://gravatar.com/avatar/${md5}?s=200&d=retro`;
+};
 
 export const User: Model<UserModel> = model<UserModel>('users', UserSchema);

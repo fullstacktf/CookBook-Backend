@@ -15,9 +15,9 @@ export default class UserCRUD {
 
   static async signUp(body: UserModel): Promise<string> {
     const { userName, email, password } = body;
+
     const newUser: UserModel = new User({
       userName,
-      avatar: 'avatar',
       email,
       password,
       ingredientsPreferences: {
@@ -29,18 +29,21 @@ export default class UserCRUD {
       otherRecipes: [],
       rol: 'user'
     });
+    newUser.avatar = newUser.gravatar();
     await newUser.save(err => { if (err) throw err; });
 
     return createToken(newUser);
   }
 
-  static async logIn(body: UserModel): Promise<string> {
+  static async signIn(body: UserModel): Promise<string> {
     const { userName, password } = body;
-    const user = await User.findOne(userName);
-    // user.comparePassword(password, (error, isMatch) => {
-    //   if (error) throw error;
-    //   if (!isMatch) throw error;
-    // });
+    const user = await User.findOne({ userName });
+    if (user === null) throw Error;
+    user.comparePasswords(password, (error, isMatch) => {
+      if (error) throw error;
+      if (!isMatch) throw error;
+      console.log('controller');
+    });
     const token = createToken(user);
     return token;
   }
