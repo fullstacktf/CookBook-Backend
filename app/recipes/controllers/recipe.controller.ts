@@ -10,8 +10,8 @@ export const getRecipes = async (req: Request, res: Response, next: NextFunction
         return res.status(200).json(recipes);
       next('The database is empty.');
     })
-    .catch(error => {
-      next(`Error in the database when looking for recipes: ${error}`);
+    .catch(() => {
+      next('Error in the database when looking for recipes');
     });
 };
 
@@ -22,8 +22,8 @@ export const getRecipe = async (req: Request, res: Response, next: NextFunction)
         return res.status(200).json(recipe);
       next('Error to get the recipe or the recipe does not exist.');
     })
-    .catch(error => {
-      next(`Error in the database when looking for the recipe: ${error}`);
+    .catch(() => {
+      next('Error in the database when looking for the recipe');
     });
 };
 
@@ -32,8 +32,8 @@ export const newRecipe = async (req: Request, res: Response, next: NextFunction)
     .then(recipe => {
       res.status(200).json(recipe);
     })
-    .catch(error => {
-      next(`Error to save the recipe in the database: ${error}`);
+    .catch(() => {
+      next('Error to save the recipe in the database');
     });
 };
 
@@ -42,8 +42,48 @@ export const updateRecipe = async (req: Request, res: Response, next: NextFuncti
     .then(recipeUpdated => {
       res.status(200).json(recipeUpdated);
     })
-    .catch(error => {
-      next(`Error in the database when updating: ${error}`);
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
+export const likeRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.likeDislikeRecipe(req.params.id, req.body, true)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
+export const dislikeRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.likeDislikeRecipe(req.params.id, req.body, false)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
+export const commentRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.commentRecipe(req.params.id, req.body)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
+export const deleteCommentRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.commentRecipe(req.params.id, req.body)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
     });
 };
 
@@ -52,7 +92,7 @@ export const deleteRecipe = async (req: Request, res: Response, next: NextFuncti
     .then(recipeDeleted => {
       res.status(200).json(recipeDeleted);
     })
-    .catch(error => {
-      next(`Error to delete the recipe: ${error}`);
+    .catch(() => {
+      next('Error to delete the recipe');
     });
 };

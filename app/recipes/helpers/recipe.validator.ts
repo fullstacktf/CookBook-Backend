@@ -10,8 +10,8 @@ export const recipeValidationRules = (): ValidationChain[] => {
       .withMessage('Title cannot be empty.')
       .isString()
       .withMessage('Error in the title.')
-      .isAlphanumeric()
-      .withMessage('Title must be alphanumeric.')
+      .matches(/^[a-zA-Z0-9\s]+$/, 'i')
+      .withMessage('Title must be alphanumeric, and can contain spaces')
       .isLength({ min: 2, max: 30 })
       .withMessage('The Title must have a length between 2 and 30.'),
 
@@ -34,8 +34,9 @@ export const recipeValidationRules = (): ValidationChain[] => {
         ingredients.forEach(element => {
           const keys = Object.keys(element);
           const values = Object.values(element);
-          if (keys[0] != 'name' || values[0] === '') throw new Error('Ingredient name cannot be empty.');
-          if (keys[1] != 'quantity' || values[1] === '') throw new Error('Ingredient quantity cannot be empty.');
+
+          if (!keys.includes('name') || values[keys.indexOf('name')] === '') throw new Error('Ingredient name cannot be empty.');
+          if (!keys.includes('quantity') || values[keys.indexOf('quantity')] === '') throw new Error('Ingredient quantity cannot be empty.');
         });
 
         return true;
