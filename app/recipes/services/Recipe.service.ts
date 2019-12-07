@@ -54,9 +54,21 @@ export default class RecipeCRUD {
 
   static async deleteCommentRecipe(id: string, cid: string): Promise<RecipeModel> {
     const recipe = await this.getRecipe(id);
-    recipe.comments.remove(cid);
+    recipe.comments.pull(cid);
     await recipe.save();
     return recipe;
+  }
+
+  static async getCommentRecipe(id: string, cid: string): Promise<RecipeModel> {
+    const recipe = await this.getRecipe(id);
+    const comment = recipe.comments.id(cid);
+    return comment;
+  }
+
+  static async getCommentsRecipe(id: string): Promise<RecipeModel> {
+    const recipe = await this.getRecipe(id);
+    const comment = recipe.comments;
+    return comment;
   }
 
   static async deleteRecipe(id: string): Promise<RecipeModel> {

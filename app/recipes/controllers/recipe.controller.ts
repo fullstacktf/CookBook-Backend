@@ -97,6 +97,26 @@ export const deleteCommentRecipe = async (req: Request, res: Response, next: Nex
     });
 };
 
+export const getCommentRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getCommentRecipe(req.params.id, req.params.cid)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
+export const getCommentsRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getCommentsRecipe(req.params.id)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
 export const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => {
   recipeService.deleteRecipe(req.params.id)
     .then(recipeDeleted => {

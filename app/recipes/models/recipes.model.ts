@@ -6,7 +6,7 @@ export interface RecipeModel extends Document {
   description: string;
   ingredients: Array<object>;
   likes: number;
-  comments;
+  comments;// : Array<object>;
   date: Date;
   tags: Array<string>;
 }

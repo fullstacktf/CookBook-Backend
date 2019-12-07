@@ -29,7 +29,13 @@ router.get('/:id/likes', recipeController.getlikeRecipe);
 router.put('/:id/comment', recipeController.commentRecipe); // need comments validator
 
 // delete a comment
-router.put('/:id/deletecomment/:cid', recipeController.deleteCommentRecipe); // need comments validator
+router.put('/:id/comment/:cid', recipeController.deleteCommentRecipe); // need comments validator
+
+// get a comment
+router.get('/:id/comment/:cid', recipeController.getCommentRecipe);
+
+// get comments
+router.get('/:id/comment/', recipeController.getCommentsRecipe);
 
 // delete recipe
 router.delete('/:id', recipeController.deleteRecipe);
