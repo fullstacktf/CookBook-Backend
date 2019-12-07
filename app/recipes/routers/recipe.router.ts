@@ -22,6 +22,9 @@ router.put('/:id/like', recipeValidationRules(), validator, recipeController.lik
 // dislike
 router.put('/:id/dislike', recipeValidationRules(), validator, recipeController.dislikeRecipe);
 
+//getLikes
+router.get('/:id/likes', recipeController.getlikeRecipe);
+
 // comment
 router.put('/:id/comment', recipeController.commentRecipe); // need comments validator
 

@@ -67,6 +67,16 @@ export const dislikeRecipe = async (req: Request, res: Response, next: NextFunct
     });
 };
 
+export const getlikeRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getlikeRecipe(req.params.id)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error updating the database');
+    });
+};
+
 export const commentRecipe = async (req: Request, res: Response, next: NextFunction) => {
   recipeService.commentRecipe(req.params.id, req.body)
     .then(recipe => {

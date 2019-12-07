@@ -40,6 +40,11 @@ export default class RecipeCRUD {
     return recipe.id;
   }
 
+  static async getlikeRecipe(id: string): Promise<number> {
+    const recipe = await this.getRecipe(id);
+    return recipe.likes;
+  }
+
   static async commentRecipe(id: string, body: RecipeModel): Promise<RecipeModel> {
     const recipe = await this.getRecipe(id);
     recipe.comments.push(body);
