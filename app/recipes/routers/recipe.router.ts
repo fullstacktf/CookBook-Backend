@@ -26,7 +26,7 @@ router.put('/:id/dislike', recipeValidationRules(), validator, recipeController.
 router.put('/:id/comment', recipeController.commentRecipe); // need comments validator
 
 // delete a comment
-router.put('/:id/deletecomment', recipeController.deleteCommentRecipe); // need comments validator
+router.put('/:id/deletecomment/:cid', recipeController.deleteCommentRecipe); // need comments validator
 
 // delete recipe
 router.delete('/:id', recipeController.deleteRecipe);

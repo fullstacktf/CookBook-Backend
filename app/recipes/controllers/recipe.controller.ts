@@ -78,7 +78,7 @@ export const commentRecipe = async (req: Request, res: Response, next: NextFunct
 };
 
 export const deleteCommentRecipe = async (req: Request, res: Response, next: NextFunction) => {
-  recipeService.commentRecipe(req.params.id, req.body)
+  recipeService.deleteCommentRecipe(req.params.id, req.params.cid)
     .then(recipe => {
       res.status(200).json(recipe);
     })
