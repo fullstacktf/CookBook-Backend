@@ -1,6 +1,7 @@
 import { Recipe, RecipeModel,/*  ImageModel */ } from '../models/recipes.model';
 import path from 'path';
 import fs from 'fs-extra';
+import { Error } from 'mongoose';
 
 export default class RecipeCRUD {
 
@@ -94,15 +95,21 @@ export default class RecipeCRUD {
   static async uploadImage(id: string, file: Express.Multer.File): Promise<RecipeModel> {
     const recipe = await this.getRecipe(id);
 
-    const body/* : ImageModel */ = {
-      imgTitle: file.filename,
-      imgDate: new Date,
-      imgPath: file.path
-    };
+    if (!file) throw new Error('no files have been uploaded');
 
-    recipe.images.push(body);
-    await recipe.save();
-    return recipe.id;
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
+      const body/* : ImageModel */ = {
+        imgTitle: file.filename,
+        imgDate: new Date,
+        imgPath: file.path
+      };
+
+      recipe.images.push(body);
+      await recipe.save();
+      return recipe.id;
+    }
+    else
+      throw new Error('Invalid format, only files with extension .jpg, .jpeg and .png');
   }
 
   static async deleteImage(id: string, iid: string): Promise<RecipeModel> {

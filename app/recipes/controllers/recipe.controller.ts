@@ -143,8 +143,8 @@ export const uploadImage = async (req: Request, res: Response, next: NextFunctio
     .then(recipe => {
       res.status(200).json(recipe);
     })
-    .catch(() => {
-      next('Error uploading image');
+    .catch((error) => {
+      next(`Error uploading image: ${error}`);
     });
 };
 

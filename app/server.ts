@@ -21,10 +21,6 @@ server.use(urlencoded({ extended: false }));
 server.use(json());
 server.use(multer.single('image'));
 
-server.use(express.static(path.resolve('public/assets/uploads')));
-
-server.use('/recipes', recipeRouter);
-
 server.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
   if (err) {
     res.status(500).json(err);
@@ -32,6 +28,11 @@ server.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFun
   next();
 });
 
+// Static files
+server.use(express.static(path.resolve('public/assets/uploads')));
+
+// Routes
+server.use('/recipes', recipeRouter);
 // Starting the server and DB
 
 mongoose.connect(config.db, { useNewUrlParser: true })
