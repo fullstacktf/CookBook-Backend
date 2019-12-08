@@ -1,6 +1,7 @@
 import * as recipeController from '../controllers/recipe.controller';
 import validator, { recipeValidationRules } from '../helpers/recipe.validator';
 import { Router } from 'express';
+import multer from '../../config/multer';
 
 const router: Router = Router();
 
@@ -11,10 +12,13 @@ router.get('/', recipeController.getRecipes);
 router.get('/:id', recipeController.getRecipe);
 
 // add new recipe
-router.post('/', recipeValidationRules(), validator, recipeController.newRecipe);
+router.post('/', recipeValidationRules(), validator, multer.single('image'), recipeController.newRecipe);
 
 // update a new recipe
 router.put('/:id', recipeValidationRules(), validator, recipeController.updateRecipe);
+
+// delete recipe
+router.delete('/:id', recipeController.deleteRecipe);
 
 // like
 router.put('/:id/like', recipeValidationRules(), validator, recipeController.likeRecipe);
@@ -23,7 +27,7 @@ router.put('/:id/like', recipeValidationRules(), validator, recipeController.lik
 router.put('/:id/dislike', recipeValidationRules(), validator, recipeController.dislikeRecipe);
 
 //getLikes
-router.get('/:id/likes', recipeController.getlikeRecipe);
+router.get('/:id/like', recipeController.getlikeRecipe);
 
 // comment
 router.put('/:id/comment', recipeController.commentRecipe); // need comments validator
@@ -37,7 +41,14 @@ router.get('/:id/comment/:cid', recipeController.getCommentRecipe);
 // get comments
 router.get('/:id/comment/', recipeController.getCommentsRecipe);
 
-// delete recipe
-router.delete('/:id', recipeController.deleteRecipe);
+// upload images
+router.post('/:id/images', multer.single('image'), recipeController.uploadImage); // need validator
+
+// get images
+router.get('/:id/images', recipeController.getImages);
+
+// delete a image
+router.put('/:id/images/:iid', recipeController.deleteImage);
+
 
 export = router;

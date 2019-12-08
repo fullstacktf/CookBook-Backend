@@ -1,10 +1,18 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
+// export interface ImageModel extends Document {
+//   imgTitle: string;
+//   imgPath: string;
+//   imgDate: Date;
+// }
+
+
 export interface RecipeModel extends Document {
   title: string;
   owner: string;
   description: string;
   ingredients: Array<object>;
+  images;//: Array<ImageModel>;
   likes: number;
   comments;// : Array<object>;
   date: Date;
@@ -18,6 +26,11 @@ const RecipeSchema: Schema = new Schema({
   ingredients: [{
     name: String,
     quantity: String
+  }],
+  images: [{
+    imgTitle: String,
+    imgPath: String,
+    imgDate: Date
   }],
   likes: Number,
   comments: [{

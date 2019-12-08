@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import validateDeliverRecipe from '../helpers/recipe.helper';
 import recipeService from '../services/Recipe.service';
 import { Request, Response, NextFunction } from 'express';
@@ -126,3 +127,35 @@ export const deleteRecipe = async (req: Request, res: Response, next: NextFuncti
       next('Error to delete the recipe');
     });
 };
+
+export const getImages = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getImages(req.params.id)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error to get the images');
+    });
+};
+
+export const uploadImage = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.uploadImage(req.params.id, req.file)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error uploading image');
+    });
+};
+
+export const deleteImage = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.deleteImage(req.params.id, req.params.iid)
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(() => {
+      next('Error deleting image');
+    });
+};
+
+

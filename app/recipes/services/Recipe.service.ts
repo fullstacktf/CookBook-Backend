@@ -1,4 +1,6 @@
-import { Recipe, RecipeModel } from '../models/recipes.model';
+import { Recipe, RecipeModel,/*  ImageModel */ } from '../models/recipes.model';
+import path from 'path';
+import fs from 'fs-extra';
 
 export default class RecipeCRUD {
 
@@ -19,6 +21,7 @@ export default class RecipeCRUD {
       owner,
       description,
       ingredients,
+      images: [],
       likes: 0,
       comments: [],
       date: new Date(),
@@ -34,6 +37,13 @@ export default class RecipeCRUD {
     return recipeUpdated.id;
   }
 
+  static async deleteRecipe(id: string): Promise<RecipeModel> {
+    const recipeDeleted = await Recipe.findByIdAndDelete(id);
+    return recipeDeleted;
+  }
+
+  // likes and dislikes controllers
+
   static async likeDislikeRecipe(id: string, body: RecipeModel, symbol: boolean): Promise<RecipeModel> {
     symbol ? body.likes += 1 : body.likes -= 1;
     const recipe = await Recipe.findByIdAndUpdate(id, body);
@@ -44,6 +54,8 @@ export default class RecipeCRUD {
     const recipe = await this.getRecipe(id);
     return recipe.likes;
   }
+
+  // comment controllers
 
   static async commentRecipe(id: string, body: RecipeModel): Promise<RecipeModel> {
     const recipe = await this.getRecipe(id);
@@ -71,8 +83,36 @@ export default class RecipeCRUD {
     return comment;
   }
 
-  static async deleteRecipe(id: string): Promise<RecipeModel> {
-    const recipeDeleted = await Recipe.findByIdAndDelete(id);
-    return recipeDeleted;
+  // images controllers
+
+  static async getImages(id: string): Promise<RecipeModel> {
+    const recipe = await this.getRecipe(id);
+    const image = recipe.images;
+    return image;
+  }
+
+  static async uploadImage(id: string, file: Express.Multer.File): Promise<RecipeModel> {
+    const recipe = await this.getRecipe(id);
+
+    const body/* : ImageModel */ = {
+      imgTitle: file.filename,
+      imgDate: new Date,
+      imgPath: file.path
+    };
+
+    recipe.images.push(body);
+    await recipe.save();
+    return recipe.id;
+  }
+
+  static async deleteImage(id: string, iid: string): Promise<RecipeModel> {
+    const recipe = await this.getRecipe(id);
+    const image = recipe.images.id(iid);
+    if (image) {
+      fs.unlink(path.resolve(image.imgPath));
+    }
+    recipe.images.pull(iid);
+    await recipe.save();
+    return recipe;
   }
 }

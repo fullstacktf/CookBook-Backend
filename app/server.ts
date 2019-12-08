@@ -3,6 +3,7 @@ import config from './config/config';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import recipeRouter from './recipes/routers/recipe.router';
+import path from 'path';
 
 
 const server = express();
@@ -20,6 +21,8 @@ server.use(urlencoded({ extended: false }));
 server.use(json());
 
 server.use('/recipes', recipeRouter);
+
+server.use('/uploads', express.static(path.resolve('assets')));
 
 server.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
   if (err) {
