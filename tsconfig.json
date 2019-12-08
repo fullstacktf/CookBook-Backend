@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "./dist",
+        "outDir": "./public",
         "rootDir": "./app",
         "target": "es5",
         "esModuleInterop": true

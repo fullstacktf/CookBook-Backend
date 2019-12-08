@@ -1,7 +1,6 @@
 import * as recipeController from '../controllers/recipe.controller';
 import validator, { recipeValidationRules } from '../helpers/recipe.validator';
 import { Router } from 'express';
-import multer from '../../config/multer';
 
 const router: Router = Router();
 
@@ -12,7 +11,7 @@ router.get('/', recipeController.getRecipes);
 router.get('/:id', recipeController.getRecipe);
 
 // add new recipe
-router.post('/', recipeValidationRules(), validator, multer.single('image'), recipeController.newRecipe);
+router.post('/', recipeValidationRules(), validator, recipeController.newRecipe);
 
 // update a new recipe
 router.put('/:id', recipeValidationRules(), validator, recipeController.updateRecipe);
@@ -42,7 +41,7 @@ router.get('/:id/comment/:cid', recipeController.getCommentRecipe);
 router.get('/:id/comment/', recipeController.getCommentsRecipe);
 
 // upload images
-router.post('/:id/images', multer.single('image'), recipeController.uploadImage); // need validator
+router.post('/:id/images', recipeController.uploadImage); // need validator
 
 // get images
 router.get('/:id/images', recipeController.getImages);

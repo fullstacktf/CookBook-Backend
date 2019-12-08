@@ -7,7 +7,6 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-/assets
 
 # Icon must end with two \r
 Icon
@@ -477,3 +476,4 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/node,macos,visualstudio
 
 .package-lock.json
+assets

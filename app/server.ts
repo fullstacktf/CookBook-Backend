@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import recipeRouter from './recipes/routers/recipe.router';
 import path from 'path';
-
+import multer from './config/multer';
 
 const server = express();
 
@@ -19,10 +19,11 @@ server.set('port', config.port);
 server.use(morgan('dev'));
 server.use(urlencoded({ extended: false }));
 server.use(json());
+server.use(multer.single('image'));
+
+server.use(express.static(path.resolve('public/assets/uploads')));
 
 server.use('/recipes', recipeRouter);
-
-server.use('/uploads', express.static(path.resolve('assets')));
 
 server.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
   if (err) {
