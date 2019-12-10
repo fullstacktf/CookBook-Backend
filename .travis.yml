@@ -10,10 +10,7 @@ jobs:
       script: npm test
     - stage: building
       script:
-        - npm i 
         - npm run ts
-        - ls -la
-
 env:
   global:
   - REMOTE_PATH=project/
