@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./app",
-    "target": "es5",
-    "esModuleInterop": true
+        "outDir": "./public",
+        "rootDir": "./app",
+        "target": "es5",
+        "esModuleInterop": true
     },
     "include": [
-    "app/**/*"
+        "app/**/*"
     ]
-    }
+}

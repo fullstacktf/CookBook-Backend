@@ -21,6 +21,24 @@
         "no-var": "error",
         "prefer-const": "error"
     },
+    // "overrides": [
+    //     {
+    //         // enable the rule specifically for TypeScript files
+    //         "files": [
+    //             "*.ts",
+    //             "*.tsx"
+    //         ],
+    //         "rules": {
+    //             "@typescript-eslint/typedef": [
+    //                 "error",
+    //                 {
+    //                     "arrowParameter": false,
+    //                     "variableDeclaration": true
+    //                 }
+    //             ]
+    //         }
+    //     }
+    // ],
     "env": {
         "es6": true,
         "browser": true,

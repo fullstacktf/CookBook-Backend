@@ -1,3 +1,5 @@
+node_modules
+package-lock.json
 
 # Created by https://www.gitignore.io/api/node,macos,visualstudio
 # Edit at https://www.gitignore.io/?templates=node,macos,visualstudio
@@ -475,3 +477,6 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/node,macos,visualstudio
+
+.package-lock.json
+assets
