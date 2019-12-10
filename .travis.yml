@@ -12,7 +12,7 @@ jobs:
       script:
       before_install: bash scripts/install.sh
       env:
-        - REMOTE_PATH=project/
+        - REMOTE_PATH=/var/www/chefs4.me/
         - REMOTE_USER=travisci
         - REMOTE_HOST=165.22.77.10
         - REMOTE_PORT=22
