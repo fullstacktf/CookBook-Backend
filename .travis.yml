@@ -16,7 +16,6 @@ env:
   - REMOTE_PATH=project
   - REMOTE_USER=travisci
   - REMOTE_HOST=165.22.77.10
-  - REMOTE_PORT=6622
 before_install:
   - bash scripts/install.sh
 after_success:
