@@ -9,7 +9,10 @@ jobs:
   - stage: test
     script: npm test
   - stage: creating public dir
-    script: npm run ts
+    script:
+      - npm i 
+      - npm run ts
+      - ls -la
 
 env:
   global:
