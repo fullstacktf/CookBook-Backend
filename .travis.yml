@@ -8,7 +8,7 @@ jobs:
   include:
     - stage: test
       script: npm test
-    - stage: creating public dir
+    - stage: building
       script:
         - npm i 
         - npm run ts
