@@ -3,7 +3,7 @@ node_js:
 - stable
 branches:
   only:
-  - dev
+  - master
 jobs:
   include:
     - stage: test
