@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "ts": "tsc -p .",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf public",
     "server": "npm app/server.ts",
     "dev": "nodemon app/server.ts",
     "test": "jest",

@@ -29,7 +29,7 @@ export default class RecipeCRUD {
       tags
     });
     await newRecipe.save();
-    return newRecipe;
+    return newRecipe.id;
   }
 
   static async updateRecipe(id: string, body: RecipeModel): Promise<RecipeModel> {
@@ -62,14 +62,14 @@ export default class RecipeCRUD {
     const recipe = await this.getRecipe(id);
     recipe.comments.push(body);
     await recipe.save();
-    return recipe;
+    return recipe.id;
   }
 
   static async deleteCommentRecipe(id: string, cid: string): Promise<RecipeModel> {
     const recipe = await this.getRecipe(id);
     recipe.comments.pull(cid);
     await recipe.save();
-    return recipe;
+    return recipe.id;
   }
 
   static async getCommentRecipe(id: string, cid: string): Promise<RecipeModel> {
@@ -80,8 +80,8 @@ export default class RecipeCRUD {
 
   static async getCommentsRecipe(id: string): Promise<RecipeModel> {
     const recipe = await this.getRecipe(id);
-    const comment = recipe.comments;
-    return comment;
+    const comments = recipe.comments;
+    return comments;
   }
 
   // images controllers
@@ -108,8 +108,12 @@ export default class RecipeCRUD {
       await recipe.save();
       return recipe.id;
     }
-    else
+    else {
+      if (file.path) {
+        fs.unlink(path.resolve(file.path));
+      }
       throw new Error('Invalid format, only files with extension .jpg, .jpeg and .png');
+    }
   }
 
   static async deleteImage(id: string, iid: string): Promise<RecipeModel> {
