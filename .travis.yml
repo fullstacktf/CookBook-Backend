@@ -6,13 +6,11 @@ branches:
   - dev
 jobs:
   include:
-  - stage: start
-    script: npm run start
   - stage: test
     script: npm test
   - stage: creating public dir
     script: npm run ts
-     
+
 env:
   global:
   - REMOTE_PATH=project
