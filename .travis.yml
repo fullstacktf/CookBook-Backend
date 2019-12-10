@@ -10,12 +10,13 @@ jobs:
     script: npm test
   - stage: creating public dir
     script: npm run ts
-    
+
 env:
   global:
   - REMOTE_PATH=project/CookBook-Backend
   - REMOTE_USER=travisci
   - REMOTE_HOST=165.22.77.10
+  - REMOTE_PORT=22
 before_install:
   - bash scripts/install.sh
 after_success:
