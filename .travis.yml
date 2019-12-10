@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+- stable
+branches:
+  only:
+  - dev
+jobs:
+  include:
+  - stage: test
+    script: npm test
+  - stage: creating public dir
+    script: npm run ts
+
+env:
+  global:
+  - REMOTE_PATH=project
+  - REMOTE_USER=travisci
+  - REMOTE_HOST=165.22.77.10
+before_install:
+  - bash scripts/install.sh
+after_success:
+  - bash scripts/deploy.sh

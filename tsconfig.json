@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "outDir": "./public",
+        "rootDir": "./app",
+        "target": "es5",
+        "esModuleInterop": true
+    },
+    "include": [
+        "app/**/*"
+    ]
+}
