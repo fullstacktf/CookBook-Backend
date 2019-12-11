@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { User, UserModel } from '../models/users.model';
 import { Request, Response, NextFunction } from 'express';
+import { decodeToken } from '../services/jwt.services';
 
 const alreadyExist = async (field: object): Promise<UserModel> => {
   console.log('field ', field);
@@ -47,3 +48,15 @@ const validator = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default validator;
+
+export const userProfileValidator = async (req: Request, res: Response, next: NextFunction) => {
+
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = await decodeToken(token);
+
+  if (decodedToken === req.params.user)
+    next();
+  else
+    next('Invalid access');
+
+};

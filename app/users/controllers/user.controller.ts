@@ -12,8 +12,8 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
     });
 };
 
-export const getUser = async (req: Request, res: Response, next: NextFunction) => {
-  userServices.getUser(req.params.id)
+export const getUserByUsername = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.getUserByUsername(req.params.id)
     .then(user => {
       res.status(200).json(user);
     })
@@ -29,6 +29,16 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
     })
     .catch(() => {
       next('Error sign up');
+    });
+};
+
+export const signOut = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.signOut(req.body)
+    .then(() => {
+      res.status(200).json({ message: 'sign out succesfully' });
+    })
+    .catch(() => {
+      next('Error sign out');
     });
 };
 
@@ -59,5 +69,35 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     })
     .catch(() => {
       next('Error in DB deleting user');
+    });
+};
+
+export const getUserRecipes = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.getUserRecipes(req.params.user)
+    .then(userRecipes => {
+      res.status(200).json(userRecipes);
+    })
+    .catch(() => {
+      next('Error in the db looking for users recipes');
+    });
+};
+
+export const saveUserRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.saveUserRecipe(req.params.user, req.body)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      next('Error in the db saving users recipes');
+    });
+};
+
+export const deleteUserRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.deleteUserRecipe(req.params.user, req.body)
+    .then(userRecipes => {
+      res.status(200).json(userRecipes);
+    })
+    .catch(() => {
+      next('Error in the db deleting users recipes');
     });
 };

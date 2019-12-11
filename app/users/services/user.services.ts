@@ -1,5 +1,5 @@
 import { User, UserModel } from '../models/users.model';
-import { createToken } from '../services/jwt.services';
+import { createToken, destroyToken } from '../services/jwt.services';
 
 export default class UserCRUD {
 
@@ -8,8 +8,8 @@ export default class UserCRUD {
     return users;
   }
 
-  static async getUser(id: string): Promise<UserModel> {
-    const user = await User.findOne(id);
+  static async getUserByUsername(username: string): Promise<UserModel> {
+    const user = await User.findOne({ userName: username });
     return user;
   }
 
@@ -42,10 +42,13 @@ export default class UserCRUD {
     user.comparePasswords(password, (error, isMatch) => {
       if (error) throw error;
       if (!isMatch) throw error;
-      console.log('controller');
     });
     const token = createToken(user);
     return token;
+  }
+
+  static async signOut(token: JsonWebKey): Promise<JsonWebKey> {
+    return await destroyToken(token);
   }
 
   static async updateUser(id: string, body: string): Promise<UserModel> {
@@ -57,4 +60,25 @@ export default class UserCRUD {
     const userDeleted = await User.findByIdAndDelete(id);
     return userDeleted;
   }
+
+  static async getUserRecipes(username: string): Promise<string[]> {
+    const user = await this.getUserByUsername(username);
+    const ownRecipes = user.ownRecipes;
+    return ownRecipes;
+  }
+
+  static async saveUserRecipe(username: string, body: string): Promise<string> {
+    const user = await this.getUserByUsername(username);
+    user.ownRecipes.push(body);
+    await user.save();
+    return user.userName;
+  }
+
+  static async deleteUserRecipe(username: string, rid: string): Promise<string> {
+    const user = await this.getUserByUsername(username);
+    user.ownRecipes.splice(user.ownRecipes.indexOf(rid), 1);
+    await user.save();
+    return user.userName;
+  }
+
 }

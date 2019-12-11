@@ -35,6 +35,8 @@ UserSchema.pre<UserModel>('save', function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
 
+  user.userName = user.userName.toLowerCase();
+
   if (!user.isModified('password'))
     return next();
 

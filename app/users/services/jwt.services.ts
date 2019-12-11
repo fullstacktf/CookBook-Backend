@@ -10,6 +10,7 @@ export const createToken = (user): string => {
     exp: moment().add(14, 'days').unix()
   };
 
+
   return jwt.encode(payload, config.SECRET_TOKEN);
 };
 
@@ -23,4 +24,12 @@ export const decodeToken = async (token): Promise<JsonWebKey> => {
   } catch (error) {
     throw Error;
   }
+};
+
+export const destroyToken = (token: JsonWebKey): JsonWebKey => {
+  /*
+  falta implemetar guardar el token en cookies, y limpiarlas al hacer el log out
+  */
+  token = null;
+  return token;
 };

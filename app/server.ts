@@ -25,14 +25,14 @@ server.use(urlencoded({ extended: false }));
 server.use(json());
 server.use(multer.single('image'));
 
-server.use('/signup', /*validator,*/ signUp);
-server.use('/signin', /*validator,*/ signIn);
+server.use('/api/signup', /*validator,*/ signUp);
+server.use('/api/signin', /*validator,*/ signIn);
 
 server.use(auth);
 
 // Routes
-server.use('/recipes', recipeRouter);
-server.use('/users', userRouter);
+server.use('/api/recipes', recipeRouter);
+server.use('/api/users', userRouter);
 
 // Static files
 server.use(express.static(path.resolve('public/assets/uploads')));
