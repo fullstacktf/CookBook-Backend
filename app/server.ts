@@ -35,7 +35,7 @@ server.use('/api/recipes', recipeRouter);
 server.use('/api/users', userRouter);
 
 // Static files
-server.use(express.static(path.resolve('public/assets/uploads')));
+server.use(express.static(path.resolve('build/assets/uploads')));
 
 server.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
   if (err) {

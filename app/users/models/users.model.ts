@@ -1,6 +1,6 @@
 import { Document, Schema, Model, model } from 'mongoose';
 import crypto from 'crypto';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export interface UserModel extends Document {
   comparePasswords(password: string, callback): void;

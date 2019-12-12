@@ -80,5 +80,4 @@ export default class UserCRUD {
     await user.save();
     return user.userName;
   }
-
 }
