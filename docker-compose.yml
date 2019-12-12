@@ -1,0 +1,16 @@
+version: '1.0'
+services:
+  db:
+    image: mongo:3.4.23-xenial
+    volumes:
+      - dbdata:/var/lib/mongodb/data
+    restart: always
+  node:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - 3000:3000
+    restart: always
+volumes:
+  dbdata:

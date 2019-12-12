@@ -1,6 +1,7 @@
-FROM node:12.13.0-alpine
+FROM node:12.13.1-alpine
 WORKDIR /usr/src/app
-COPY . . 
+COPY package.json
 RUN npm install
-EXPOSE 80
+COPY . . 
+EXPOSE 3000
 CMD ["npm", "start"]
