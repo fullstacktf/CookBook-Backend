@@ -1,5 +1,6 @@
 node_modules
 package-lock.json
+build
 
 # Created by https://www.gitignore.io/api/node,macos,visualstudio
 # Edit at https://www.gitignore.io/?templates=node,macos,visualstudio
@@ -71,6 +72,7 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
+build
 
 # Dependency directories
 node_modules/
