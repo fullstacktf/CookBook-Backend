@@ -131,3 +131,33 @@ export const deleteUserSavedRecipes = async (req: Request, res: Response, next: 
       next('Error in the db deleting recipes from other users');
     });
 };
+
+export const getFollows = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.getFollows(req.params.user, req.body)
+    .then(follows => {
+      res.status(200).json(follows);
+    })
+    .catch(() => {
+      next('Error in the db looking for follows');
+    });
+};
+
+export const saveFollow = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.saveFollow(req.params.user, req.body)
+    .then(follow => {
+      res.status(200).json(follow);
+    })
+    .catch(() => {
+      next('Error in the db saving the follow');
+    });
+};
+
+export const deleteFollow = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.deleteFollow(req.params.user, req.body)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      next('Error in the db deleting the follow');
+    });
+};
