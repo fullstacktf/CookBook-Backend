@@ -133,7 +133,7 @@ export const deleteUserSavedRecipes = async (req: Request, res: Response, next: 
 };
 
 export const getFollows = async (req: Request, res: Response, next: NextFunction) => {
-  userServices.getFollows(req.params.user, req.body)
+  userServices.getFollows(req.params.user)
     .then(follows => {
       res.status(200).json(follows);
     })
