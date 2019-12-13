@@ -80,4 +80,24 @@ export default class UserCRUD {
     await user.save();
     return user.userName;
   }
+
+  static async getUserSavedRecipes(username: string): Promise<string[]> {
+    const user = await this.getUserByUsername(username);
+    const otherRecipes = user.otherRecipes;
+    return otherRecipes;
+  }
+
+  static async saveRecipesFromOtherUsers(username: string, body: string): Promise<string> {
+    const user = await this.getUserByUsername(username);
+    user.otherRecipes.push(body);
+    await user.save();
+    return user.userName;
+  }
+
+  static async deleteUserSavedRecipes(username: string, rid: string): Promise<string> {
+    const user = await this.getUserByUsername(username);
+    user.otherRecipes.splice(user.otherRecipes.indexOf(rid), 1);
+    await user.save();
+    return user.userName;
+  }
 }

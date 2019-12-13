@@ -101,3 +101,33 @@ export const deleteUserRecipe = async (req: Request, res: Response, next: NextFu
       next('Error in the db deleting users recipes');
     });
 };
+
+export const getUserSavedRecipes = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.getUserSavedRecipes(req.params.user)
+    .then(recipes => {
+      res.status(200).json(recipes);
+    })
+    .catch(() => {
+      next('Error in the db looking for recipes from other users');
+    });
+};
+
+export const saveRecipesFromOtherUsers = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.saveRecipesFromOtherUsers(req.params.user, req.body)
+    .then(recipes => {
+      res.status(200).json(recipes);
+    })
+    .catch(() => {
+      next('Error in the db saving recipes from other users');
+    });
+};
+
+export const deleteUserSavedRecipes = async (req: Request, res: Response, next: NextFunction) => {
+  userServices.deleteUserSavedRecipes(req.params.user, req.body)
+    .then(userRecipes => {
+      res.status(200).json(userRecipes);
+    })
+    .catch(() => {
+      next('Error in the db deleting recipes from other users');
+    });
+};

@@ -34,4 +34,15 @@ router.put('/:user/recipe', userProfileValidator, userController.saveUserRecipe)
 // delete a user recipe
 router.put('/:user/recipe/:rid', userProfileValidator, userController.deleteUserRecipe);
 
+// get the recipes saved
+router.get('/:user/savedrecipes', userController.getUserSavedRecipes);
+
+// save recipes from other users
+router.put('/:user/savedrecipes', userProfileValidator, userController.saveRecipesFromOtherUsers);
+
+// delete saved recipes
+router.put('/:user/savedrecipes/:rid', userProfileValidator, userController.deleteUserSavedRecipes);
+
+
+
 export = router;
