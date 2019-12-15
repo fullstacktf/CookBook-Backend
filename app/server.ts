@@ -8,6 +8,7 @@ import multer from './config/multer';
 import userRouter from './users/routers/user.router';
 import { signIn, signUp } from './users/controllers/user.controller';
 import { auth } from './users/middleware/auth.middleware';
+import cors from 'cors';
 // import validator from './users/helpers/user.validator';
 
 const server = express();
@@ -18,11 +19,17 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
 server.set('port', config.port);
 
+const corsOptions = {
+  origin: ['https://chefs4.me', 'http://localhost:3000'],
+  optionsSuccessStatus: 200
+};
+
 // Middlewares
 
 server.use(morgan('dev'));
 server.use(urlencoded({ extended: false }));
 server.use(json());
+server.use(cors(corsOptions));
 server.use(multer.single('image'));
 
 server.use('/api/signup', /*validator,*/ signUp);

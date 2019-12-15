@@ -1,16 +1,20 @@
-version: '1.0'
+version: '3.3'
 services:
   db:
     image: mongo:3.4.23-xenial
     volumes:
-      - dbdata:/var/lib/mongodb/data
+      - /cookbook/database/mongodb:/var/lib/mongodb
+    environment:
+      - MONGODB=mongodb://db:27017/cookbook
     restart: always
+    ports:
+      - "27017:27017"
   node:
     depends_on:
       - db
-    build: .
+    image: bolften/backend:latest
     ports:
-      - 3000:3000
+      - "3000:3000"
     restart: always
-volumes:
-  dbdata:
+    volumes:
+      - /cookbook/database/assets:/usr/src/app/build/assets/uploads

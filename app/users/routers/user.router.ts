@@ -34,4 +34,23 @@ router.put('/:user/recipe', userProfileValidator, userController.saveUserRecipe)
 // delete a user recipe
 router.put('/:user/recipe/:rid', userProfileValidator, userController.deleteUserRecipe);
 
+// get the recipes saved
+router.get('/:user/savedrecipes', userController.getUserSavedRecipes);
+
+// save recipes from other users
+router.put('/:user/savedrecipes', userProfileValidator, userController.saveRecipesFromOtherUsers);
+
+// delete saved recipes
+router.put('/:user/savedrecipes/:rid', userProfileValidator, userController.deleteUserSavedRecipes);
+
+// get follows from a user
+router.get('/:user/follows', userController.getFollows);
+
+// follow a user
+router.put('/:user/follows', userProfileValidator, userController.saveFollow);
+
+// delete a follow
+router.put('/:user/follows/:username', userProfileValidator, userController.deleteFollow);
+
+
 export = router;

@@ -9,13 +9,12 @@ jobs:
     - stage: test
       script: npm test
     - stage: building
-      script:
       before_install: bash scripts/install.sh
       env:
-        - REMOTE_PATH=project/
+        - REMOTE_PATH=cookbook
         - REMOTE_USER=travisci
         - REMOTE_HOST=165.22.77.10
         - REMOTE_PORT=22
       script: 
         - npm run ts
-        - bash scripts/deploy.sh   
+      after_success: bash scripts/deploy.sh
