@@ -86,9 +86,16 @@ export default class RecipeCRUD {
 
   // images controllers
 
-  static async getImages(id: string): Promise<RecipeModel> {
+  static async getImage(id: string, iid: string) {
     const recipe = await this.getRecipe(id);
-    const image = recipe.images;
+    const image = recipe.images.id(iid);
+    console.log(image.imgPath);
+    return image;
+  }
+
+  static async getImagesMetadata(id: string): Promise<RecipeModel> {
+    const recipe = await this.getRecipe(id);
+    const image = recipe;
     return image;
   }
 
