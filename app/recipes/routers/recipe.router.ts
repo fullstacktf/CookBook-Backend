@@ -44,7 +44,10 @@ router.get('/:id/comment/', recipeController.getCommentsRecipe);
 router.post('/:id/images', recipeController.uploadImage); // need validator
 
 // get images
-router.get('/:id/images', recipeController.getImages);
+router.get('/:id/images', recipeController.getImagesMetadata);
+
+// get a image
+router.get('/:id/image/:iid', recipeController.getImage);
 
 // delete a image
 router.put('/:id/images/:iid', recipeController.deleteImage);

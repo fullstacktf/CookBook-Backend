@@ -3,6 +3,7 @@
 import validateDeliverRecipe from '../helpers/recipe.helper';
 import recipeService from '../services/Recipe.service';
 import { Request, Response, NextFunction } from 'express';
+import path from 'path';
 
 export const getRecipes = async (req: Request, res: Response, next: NextFunction) => {
   recipeService.getRecipes()
@@ -128,8 +129,18 @@ export const deleteRecipe = async (req: Request, res: Response, next: NextFuncti
     });
 };
 
-export const getImages = async (req: Request, res: Response, next: NextFunction) => {
-  recipeService.getImages(req.params.id)
+export const getImage = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getImage(req.params.id, req.params.iid)
+    .then(image => {
+      res.status(200).sendFile(path.resolve(image.imgPath));
+    })
+    .catch(() => {
+      next('Error to get the images');
+    });
+};
+
+export const getImagesMetadata = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getImagesMetadata(req.params.id)
     .then(recipe => {
       res.status(200).json(recipe);
     })
