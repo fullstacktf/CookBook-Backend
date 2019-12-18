@@ -29,6 +29,18 @@ export const getRecipe = async (req: Request, res: Response, next: NextFunction)
     });
 };
 
+export const getUserRecipes = async (req: Request, res: Response, next: NextFunction) => {
+  recipeService.getUserRecipes(req.params.username)
+    .then(recipe => {
+      if (validateDeliverRecipe(recipe))
+        return res.status(200).json(recipe);
+      next('Error to get the recipes or the user has no recipes.');
+    })
+    .catch(() => {
+      next('Error in the database when looking for the recipes');
+    });
+};
+
 export const newRecipe = async (req: Request, res: Response, next: NextFunction) => {
   recipeService.newRecipe(req.body)
     .then(recipe => {

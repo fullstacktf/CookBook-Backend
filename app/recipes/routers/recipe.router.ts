@@ -10,6 +10,9 @@ router.get('/', recipeController.getRecipes);
 // get one recipe
 router.get('/:id', recipeController.getRecipe);
 
+//get recipes of a user
+router.get('/user/:username', recipeController.getUserRecipes);
+
 // add new recipe
 router.post('/', recipeValidationRules(), validator, recipeController.newRecipe);
 

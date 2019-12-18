@@ -1,10 +1,10 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
-// export interface ImageModel extends Document {
-//   imgTitle: string;
-//   imgPath: string;
-//   imgDate: Date;
-// }
+export interface ImageModel extends Document {
+  imgTitle: string;
+  imgPath: string;
+  imgDate: Date;
+}
 
 
 export interface RecipeModel extends Document {

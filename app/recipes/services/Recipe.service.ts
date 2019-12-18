@@ -1,4 +1,4 @@
-import { Recipe, RecipeModel,/*  ImageModel */ } from '../models/recipes.model';
+import { Recipe, RecipeModel, ImageModel } from '../models/recipes.model';
 import path from 'path';
 import fs from 'fs-extra';
 import { Error } from 'mongoose';
@@ -13,6 +13,11 @@ export default class RecipeCRUD {
   static async getRecipe(id: string): Promise<RecipeModel> {
     const recipe = await Recipe.findById(id);
     return recipe;
+  }
+
+  static async getUserRecipes(username: string): Promise<RecipeModel> {
+    const recipes = await Recipe.findOne({ owner: username });
+    return recipes;
   }
 
   static async newRecipe(body: RecipeModel): Promise<RecipeModel> {
@@ -86,10 +91,9 @@ export default class RecipeCRUD {
 
   // images controllers
 
-  static async getImage(id: string, iid: string) {
+  static async getImage(id: string, iid: string): Promise<ImageModel> {
     const recipe = await this.getRecipe(id);
     const image = recipe.images.id(iid);
-    console.log(image.imgPath);
     return image;
   }
 
