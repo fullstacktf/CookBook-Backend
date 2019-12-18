@@ -6,7 +6,6 @@ export interface ImageModel extends Document {
   imgDate: Date;
 }
 
-
 export interface RecipeModel extends Document {
   title: string;
   owner: string;
