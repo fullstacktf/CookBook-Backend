@@ -15,8 +15,8 @@ export default class RecipeCRUD {
     return recipe;
   }
 
-  static async getUserRecipes(username: string): Promise<RecipeModel> {
-    const recipes = await Recipe.findOne({ owner: username });
+  static async getUserRecipes(username: string): Promise<RecipeModel[]> {
+    const recipes = await Recipe.find({ owner: username });
     return recipes;
   }
 
