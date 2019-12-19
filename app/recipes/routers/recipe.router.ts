@@ -10,6 +10,9 @@ router.get('/', recipeController.getRecipes);
 // get one recipe
 router.get('/:id', recipeController.getRecipe);
 
+//get recipes of a user
+router.get('/user/:username', recipeController.getUserRecipes);
+
 // add new recipe
 router.post('/', recipeValidationRules(), validator, recipeController.newRecipe);
 
@@ -44,7 +47,10 @@ router.get('/:id/comment/', recipeController.getCommentsRecipe);
 router.post('/:id/images', recipeController.uploadImage); // need validator
 
 // get images
-router.get('/:id/images', recipeController.getImages);
+router.get('/:id/images', recipeController.getImagesMetadata);
+
+// get a image
+router.get('/:id/image/:iid', recipeController.getImage);
 
 // delete a image
 router.put('/:id/images/:iid', recipeController.deleteImage);
